@@ -9,7 +9,7 @@ export default function TermsCondition() {
   const getTermsCondition = async () => {
 
     try {
-      const response = await fetch(`https://novatv.onrender.com/footerContent/get?page=Terms_Conditions`, {
+      const response = await fetch(`https://servo-back.onrender.com/footerContent/get?page=Terms_Conditions`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

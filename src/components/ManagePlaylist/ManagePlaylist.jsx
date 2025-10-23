@@ -24,7 +24,7 @@ function ManagePlaylist() {
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
-        const response = await fetch("https://novatv.onrender.com/playList/get", {
+        const response = await fetch("https://servo-back.onrender.com/playList/get", {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ function ManagePlaylist() {
   const activePlayeList = async (playListID) => {
     setIsDisabled(true)
     try {
-      const response = await fetch(`https://novatv.onrender.com/playList/active/${playListID}`, {
+      const response = await fetch(`https://servo-back.onrender.com/playList/active/${playListID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ function ManagePlaylist() {
 
   const handleDelete = async (playlistId) => {
     try {
-      const response = await fetch(`https://novatv.onrender.com/playList/delete/${playlistId}`, {
+      const response = await fetch(`https://servo-back.onrender.com/playList/delete/${playlistId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ function ManagePlaylist() {
   const handlePasswordSubmit = async () => {
     setPasswordError('');
     try {
-      const response = await fetch(`https://novatv.onrender.com/playList/checkPassword/${selectedPlaylist._id}`, {
+      const response = await fetch(`https://servo-back.onrender.com/playList/checkPassword/${selectedPlaylist._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

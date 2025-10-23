@@ -8,7 +8,7 @@ export default function PrivacyPolicy() {
   const [editorHtml, setEditorHtml] = useState('');
   const getPrivacyPolicy = async () => {
     try {
-      const response = await fetch(`https://novatv.onrender.com/footerContent/get?page=Privacy_Policy`, {
+      const response = await fetch(`https://servo-back.onrender.com/footerContent/get?page=Privacy_Policy`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ export default function Faqs() {
   const getFaqs = async () => {
 
     try {
-      const response = await fetch(`https://novatv.onrender.com/faq/get`, {
+      const response = await fetch(`https://servo-back.onrender.com/faq/get`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -17,7 +17,7 @@ export default function ParentPin() {
 
         try {
             setIsLodaing(true)
-            const response = await fetch('https://novatv.onrender.com/lock/addParentPin', {
+            const response = await fetch('https://servo-back.onrender.com/lock/addParentPin', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

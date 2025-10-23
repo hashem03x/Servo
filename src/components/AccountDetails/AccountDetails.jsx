@@ -14,7 +14,7 @@ export default function AccountDetails() {
   const getAccountDetails = async () => {
 
     try {
-      const response = await fetch(`https://novatv.onrender.com/user/userInfo`, {
+      const response = await fetch(`https://servo-back.onrender.com/user/userInfo`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -27,7 +27,7 @@ function App() {
     const getStripeKey = async () => {
       try {
         const response = await fetch(
-          "https://novatv.onrender.com/apiKey/getPublishableKey",
+          "https://servo-back.onrender.com/apiKey/getPublishableKey",
           {
             method: "GET",
             headers: {
@@ -48,82 +48,94 @@ function App() {
     getStripeKey();
   }, []);
 
-  const routes = createBrowserRouter([
+  const routes = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <LayOut />,
+        children: [
+          { index: true, element: <Home /> },
+          {
+            path: "manageplaylist",
+            element: (
+              <ProtectedRoutes>
+                <ManagePlaylistRouting />
+              </ProtectedRoutes>
+            ),
+            children: [
+              {
+                index: true,
+                element: (
+                  <ProtectedRoutes>
+                    <ManagePlaylist />
+                  </ProtectedRoutes>
+                ),
+              },
+              {
+                path: "addplaylist",
+                element: (
+                  <ProtectedRoutes>
+                    <AddPlayList />
+                  </ProtectedRoutes>
+                ),
+              },
+              {
+                path: "editplaylist/:id",
+                element: (
+                  <ProtectedRoutes>
+                    <EditPlaylist />
+                  </ProtectedRoutes>
+                ),
+              },
+              {
+                path: "activatedevices",
+                element: (
+                  <ProtectedRoutes>
+                    <ActivateDevices />
+                  </ProtectedRoutes>
+                ),
+              },
+              {
+                path: "switchmac",
+                element: (
+                  <ProtectedRoutes>
+                    <SwitchMac />
+                  </ProtectedRoutes>
+                ),
+              },
+              {
+                path: "parentpin",
+                element: (
+                  <ProtectedRoutes>
+                    <ParentPin />
+                  </ProtectedRoutes>
+                ),
+              },
+              {
+                path: "accountdetails",
+                element: (
+                  <ProtectedRoutes>
+                    <AccountDetails />
+                  </ProtectedRoutes>
+                ),
+              },
+            ],
+          },
+          { path: "termsCondition", element: <TermsCondition /> },
+          { path: "privacyPolicy", element: <PrivacyPolicy /> },
+          { path: "*", element: <NotFound /> },
+        ],
+      },
+    ],
     {
-      path: "/",
-      element:
-        <LayOut />,
-      children: [
-        { index: true, element: <Home /> },
-        {
-          path: "manageplaylist",
-          element: <ProtectedRoutes>
-            <ManagePlaylistRouting />
-          </ProtectedRoutes>,
-          children: [
-            {
-              index: true,
-              element:
-                <ProtectedRoutes>
-                  <ManagePlaylist />
-                </ProtectedRoutes>
-            },
-            {
-              path: "addplaylist",
-              element:
-                <ProtectedRoutes>
-                  <AddPlayList />
-                </ProtectedRoutes>
-            },
-            {
-              path: "editplaylist/:id",
-              element:
-                <ProtectedRoutes>
-                  <EditPlaylist />
-                </ProtectedRoutes>
-            },
-            {
-              path: "activatedevices",
-              element:
-                <ProtectedRoutes>
-                  <ActivateDevices />
-                </ProtectedRoutes>
-            },
-            {
-              path: "switchmac",
-              element:
-                <ProtectedRoutes>
-                  <SwitchMac />
-                </ProtectedRoutes>
-            },
-            {
-              path: "parentpin",
-              element:
-                <ProtectedRoutes>
-                  <ParentPin />
-                </ProtectedRoutes>
-            },
-            {
-              path: "accountdetails",
-              element:
-                <ProtectedRoutes>
-                  <AccountDetails />
-                </ProtectedRoutes>
-            },
-          ],
-        },
-        { path: "termsCondition", element: <TermsCondition /> },
-        { path: "privacyPolicy", element: <PrivacyPolicy /> },
-        { path: "*", element: <NotFound /> },
-      ],
-    },
-  ]);
-
+      basename: "/Servo", 
+    }
+  );
 
   return (
     <LanguageProvider>
       <Elements stripe={stripePromise}>
-        <RouterProvider router={routes}></RouterProvider>
+        <RouterProvider router={routes} />
         <ToastContainer />
       </Elements>
     </LanguageProvider>
