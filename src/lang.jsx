@@ -135,7 +135,6 @@ export const Lang = {
       "Next-generation streaming application redefining simplicity.",
     quickLinks: "Quick Links",
     whoWeAre: "Who We Are",
-    features: "Features",
     howItWorks: "How It Works",
     becomeReseller: "Become a Reseller",
     support: "Support",
