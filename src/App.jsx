@@ -133,7 +133,7 @@ function App() {
       },
     ],
     {
-      basename: "/Servo", 
+      basename: "/",
     }
   );
 
