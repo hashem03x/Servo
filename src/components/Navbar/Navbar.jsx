@@ -190,17 +190,6 @@ export default function Navbar() {
             className={`${styles.header_links} flex flex-col font-medium gap-y-3 p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700`}
           >
             <li>
-              {!isLoggedIn && (
-                <NavLink
-                  to="login"
-                  className="text-white cursor-pointer"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {langValue["login"]}
-                </NavLink>
-              )}
-            </li>
-            <li>
               <ScrollLink
                 to="home"
                 smooth={true}
@@ -214,6 +203,18 @@ export default function Navbar() {
               >
                 {langValue["home"]}
               </ScrollLink>
+            </li>
+
+            <li>
+              {!isLoggedIn && (
+                <NavLink
+                  to="login"
+                  className="text-white cursor-pointer"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {langValue["Login"]}
+                </NavLink>
+              )}
             </li>
             <li>
               <ScrollLink
