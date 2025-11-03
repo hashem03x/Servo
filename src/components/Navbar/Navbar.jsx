@@ -9,6 +9,8 @@ import {
 import styles from "./Navbar.module.css";
 import flagEn from "../../assets/Image/FlagKingdom.svg";
 import flagAr from "../../assets/Image/egypt.png";
+import flagEs from "../../assets/Image/Flag_of_Spain.svg.png";
+import flagPt from "../../assets/Image/Flag_of_Portugal.svg.webp";
 import { useLanguage } from "../../contexts/LanguageContext";
 import logo from "../../assets/Image/logo_with_text.png";
 
@@ -36,6 +38,16 @@ export default function Navbar() {
       name: "Arabic",
       code: "ar",
       flag: `${flagAr}`,
+    },
+    {
+      name: "Spanish",
+      code: "es",
+      flag: `${flagEs}`,
+    },
+    {
+      name: "Portugese",
+      code: "pt",
+      flag: `${flagPt}`,
     },
   ];
   const handleLanguageChange = (language) => {
@@ -116,7 +128,7 @@ export default function Navbar() {
             </div>
 
             {isDropdownOpen && (
-              <div className="absolute mt-2 w-[6.5rem] bg-white border rounded-md shadow-lg">
+              <div className="absolute mt-2 w-[7.5rem] bg-white border rounded-md shadow-lg">
                 {languages.map((language) => (
                   <div
                     key={language.code}
@@ -289,7 +301,7 @@ export default function Navbar() {
                   className="text-white cursor-pointer"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {langValue["ManagePlaylist"]}
+                  {langValue["ManagePlaylistTitle"]}
                 </NavLink>
               )}
             </li>

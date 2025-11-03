@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import classes from './ManagePlaylist.module.css'
+import classes from "./ManagePlaylist.module.css";
 import { toast } from "react-toastify";
 
 function ManagePlaylist() {
@@ -11,12 +11,12 @@ function ManagePlaylist() {
   const [filteredPlaylists, setFilteredPlaylists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [macAddress, setMacAddress] = useState('');
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [macAddress, setMacAddress] = useState("");
   const [isChecked, setIsChecked] = useState(true);
   const [isDisabled, setIsDisabled] = useState(false);
   const { langValue } = useLanguage();
@@ -24,13 +24,16 @@ function ManagePlaylist() {
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
-        const response = await fetch("https://servo-back.onrender.com/playList/get", {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'authorization': `novON0${localStorage.getItem('authToken')}`
+        const response = await fetch(
+          "https://servo-back.onrender.com/playList/get",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `servoM0${localStorage.getItem("authToken")}`,
+            },
           }
-        });
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -52,26 +55,29 @@ function ManagePlaylist() {
     fetchPlaylists();
 
     // Get MAC address from localStorage
-    const storedMacAddress = localStorage.getItem('macAddress');
+    const storedMacAddress = localStorage.getItem("macAddress");
     if (storedMacAddress) {
       setMacAddress(storedMacAddress);
     }
   }, []);
 
   const activePlayeList = async (playListID) => {
-    setIsDisabled(true)
+    setIsDisabled(true);
     try {
-      const response = await fetch(`https://servo-back.onrender.com/playList/active/${playListID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `https://servo-back.onrender.com/playList/active/${playListID}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
         let playlistArray = data.allPlaylists;
-        playlistArray.reverse()
+        playlistArray.reverse();
         setPlaylists(playlistArray);
         setFilteredPlaylists(playlistArray);
       } else {
@@ -82,36 +88,42 @@ function ManagePlaylist() {
       setError("Failed to active playlists");
     } finally {
       setLoading(false);
-      setIsDisabled(false)
+      setIsDisabled(false);
     }
   };
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    const filtered = playlists.filter((playlist) =>
-      playlist.name.toLowerCase().includes(query) ||
-      (playlist.url && playlist.url.toLowerCase().includes(query))
+    const filtered = playlists.filter(
+      (playlist) =>
+        playlist.name.toLowerCase().includes(query) ||
+        (playlist.url && playlist.url.toLowerCase().includes(query))
     );
     setFilteredPlaylists(filtered);
   };
 
   const handleDelete = async (playlistId) => {
     try {
-      const response = await fetch(`https://servo-back.onrender.com/playList/delete/${playlistId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `novON0${localStorage.getItem('authToken')}`
+      const response = await fetch(
+        `https://servo-back.onrender.com/playList/delete/${playlistId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `novON0${localStorage.getItem("authToken")}`,
+          },
         }
-      });
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to delete playlist');
+        throw new Error("Failed to delete playlist");
       }
 
       setPlaylists(playlists.filter((playlist) => playlist._id !== playlistId));
-      setFilteredPlaylists(filteredPlaylists.filter((playlist) => playlist._id !== playlistId));
+      setFilteredPlaylists(
+        filteredPlaylists.filter((playlist) => playlist._id !== playlistId)
+      );
     } catch (err) {
       setError("Failed to delete playlist");
     }
@@ -127,58 +139,61 @@ function ManagePlaylist() {
   };
 
   const handlePasswordSubmit = async () => {
-    setPasswordError('');
+    setPasswordError("");
     try {
-      const response = await fetch(`https://servo-back.onrender.com/playList/checkPassword/${selectedPlaylist._id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `novON0${localStorage.getItem('authToken')}`
-        },
-        body: JSON.stringify({ password })
-      });
+      const response = await fetch(
+        `https://servo-back.onrender.com/playList/checkPassword/${selectedPlaylist._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `novON0${localStorage.getItem("authToken")}`,
+          },
+          body: JSON.stringify({ password }),
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
         setIsPasswordModalOpen(false);
         toast.success(data.message, {
-          theme: 'dark'
+          theme: "dark",
         });
         navigate(`editplaylist/${selectedPlaylist._id}`, {
           state: {
             playlist: selectedPlaylist,
-            password
-          }
+            password,
+          },
         });
       } else {
         switch (response.status) {
           case 404:
-            setPasswordError('Playlist not found');
+            setPasswordError("Playlist not found");
             break;
           case 400:
-            setPasswordError(data.message || 'Invalid request');
+            setPasswordError(data.message || "Invalid request");
             break;
           case 500:
-            setPasswordError('Server error occurred');
+            setPasswordError("Server error occurred");
             break;
           default:
-            setPasswordError('An error occurred. Please try again.');
+            setPasswordError("An error occurred. Please try again.");
         }
       }
     } catch (err) {
       console.error("Error checking password:", err);
-      toast.error('An error occurred. Please try again.', {
-        theme: 'dark'
+      toast.error("An error occurred. Please try again.", {
+        theme: "dark",
       });
-      setPasswordError('An error occurred. Please try again.');
+      setPasswordError("An error occurred. Please try again.");
     }
   };
   function checkBoxChecked(e, playListID) {
     if (!e.target.checked) {
       return;
     }
-    activePlayeList(playListID)
+    activePlayeList(playListID);
   }
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -211,11 +226,14 @@ function ManagePlaylist() {
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <button className="flex-shrink-0 text-black bg-white border border-transparent border-b-black font-medium rounded-lg text-sm py-2.5 w-full sm:w-[180px] sm:bg-black sm:text-white text-center">
-              {macAddress || 'No MAC Address'}
+              {macAddress || "No MAC Address"}
             </button>
-            <NavLink to="addplaylist" className="flex-shrink-0 w-full sm:w-auto">
-              <button className="w-full text-white bg-[#D8A529] font-medium rounded-lg text-sm px-5 py-2.5">
-                {langValue['AddPlaylist']}
+            <NavLink
+              to="addplaylist"
+              className="flex-shrink-0 w-full sm:w-auto"
+            >
+              <button className="w-full text-white bg-[#11afed] text-[#fff] font-medium rounded-lg text-sm px-5 py-2.5">
+                {langValue["AddPlaylist"]}
               </button>
             </NavLink>
           </div>
@@ -227,15 +245,26 @@ function ManagePlaylist() {
           <p className="text-red-500">{error}</p>
         ) : (
           <div className="bg-white rounded-lg overflow-hidden overflow-x-auto">
-            <div className={`${classes.table_header} grid grid-cols-12 bg-[#F9FAFB] border-b py-4 px-6`}>
-              <div className="col-span-3 text-[#4B4C4C] font-medium">{langValue['Playlist']}</div>
-              <div className="col-span-7 text-[#4B4C4C] font-medium mx-6">URL</div>
-              <div className="col-span-2 text-[#4B4C4C] font-medium text-right">{langValue['Actions']}</div>
+            <div
+              className={`${classes.table_header} grid grid-cols-12 bg-[#F9FAFB] border-b py-4 px-6`}
+            >
+              <div className="col-span-3 text-[#4B4C4C] font-medium">
+                {langValue["Playlist"]}
+              </div>
+              <div className="col-span-7 text-[#4B4C4C] font-medium mx-6">
+                URL
+              </div>
+              <div className="col-span-2 text-[#4B4C4C] font-medium text-right">
+                {langValue["Actions"]}
+              </div>
             </div>
 
             <div className="divide-y">
               {filteredPlaylists.map((playlist) => (
-                <div key={playlist._id} className={`grid grid-cols-12 py-4 px-6 items-center hover:bg-gray-50`}>
+                <div
+                  key={playlist._id}
+                  className={`grid grid-cols-12 py-4 px-6 items-center hover:bg-gray-50`}
+                >
                   <div className="col-span-3 text-black">{playlist.name}</div>
                   <div className="col-span-7 text-[#696CD6] truncate mx-6">
                     {playlist.isProtected ? "Protected" : playlist.url}
@@ -250,7 +279,14 @@ function ManagePlaylist() {
                       onClick={() => handleDelete(playlist._id)}
                     ></span>
                     <label class="inline-flex items-center mb-5 cursor-pointer">
-                      <input type="checkbox" value="" className="sr-only peer" onChange={(e) => checkBoxChecked(e, playlist._id)} checked={playlist.isActive} disabled={isDisabled} />
+                      <input
+                        type="checkbox"
+                        value=""
+                        className="sr-only peer"
+                        onChange={(e) => checkBoxChecked(e, playlist._id)}
+                        checked={playlist.isActive}
+                        disabled={isDisabled}
+                      />
                       <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-400 dark:peer-checked:bg-red-400"></div>
                     </label>
                   </div>
@@ -269,7 +305,9 @@ function ManagePlaylist() {
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel className="mx-auto max-w-sm rounded bg-white p-6">
-            <Dialog.Title className="text-lg font-medium mb-4">Enter Password</Dialog.Title>
+            <Dialog.Title className="text-lg font-medium mb-4">
+              Enter Password
+            </Dialog.Title>
             <input
               type="password"
               value={password}
@@ -302,4 +340,3 @@ function ManagePlaylist() {
 }
 
 export default ManagePlaylist;
-

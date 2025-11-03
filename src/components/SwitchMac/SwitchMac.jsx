@@ -24,7 +24,7 @@ export default function SwitchMac() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'authorization': `novON0${localStorage.getItem('authToken')}`
+                    'authorization': `servoM0${localStorage.getItem('authToken')}`
                 },
                 body: JSON.stringify(body),
             });

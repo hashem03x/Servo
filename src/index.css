@@ -31,40 +31,43 @@
 }
 
 #sideBar {
-  width: 5.5vw;
+  width: auto;
   overflow: hidden;
   transition: 0.8s;
   margin-right: auto;
+  height: 100vh;
+  margin-top: 14px;
+  border-top-left-radius: 0
 }
 
 #sideBar .NonActive {
   @apply flex items-center gap-10 w-full;
 }
 
-#sideBar .listTitle {
+/* #sideBar .listTitle {
   visibility: hidden;
-}
+} */
 
 #sideBar .iconColor {
-  color: #ff9d03;
+  color: #10aded;
 }
 
-#sideBar:hover {
+/* #sideBar:hover {
   width: 21.5vw;
   transition: 0.5s;
-}
+} */
 
 .Active {
   @apply bg-white text-black rounded flex items-center p-3 gap-10 w-full;
 }
 
-#sideBar:hover .listTitle {
+/* #sideBar:hover .listTitle {
   visibility: visible;
-}
+} */
 
-#sideBar:hover .iconColor {
+/* #sideBar:hover .iconColor {
   color: inherit;
-}
+} */
 
 #sideBar ul {
   @apply w-64 p-4 flex flex-col gap-4;
@@ -106,9 +109,9 @@
     @apply flex items-center gap-4 w-full p-3;
   }
 
-  #sideBar .listTitle {
+  /* #sideBar .listTitle {
     visibility: visible;
-  }
+  } */
 
   #sideBar ul {
     @apply w-full gap-4;
@@ -119,13 +122,13 @@
   }
 
   /* Reset hover styles for mobile */
-  #sideBar:hover {
+  /* #sideBar:hover {
     width: 100%;
-  }
+  } */
 
-  #sideBar:hover .Active {
+  /* #sideBar:hover .Active {
     @apply bg-transparent text-white;
-  }
+  } */
 
   #sideBar ul li a:hover,
   #sideBar ul li a.active {

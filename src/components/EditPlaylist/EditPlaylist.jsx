@@ -26,7 +26,7 @@ export default function EditPlaylist() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'authorization': `novON0${localStorage.getItem('authToken')}`,
+          'authorization': `servoM0${localStorage.getItem('authToken')}`,
         },
         body: JSON.stringify({
           name: playlistName,

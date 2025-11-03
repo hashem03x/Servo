@@ -14,6 +14,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ManagePlaylistRouting from "./components/ManagePlaylistRouting/ManagePlaylistRouting";
 import TermsCondition from "./components/TermsCondition/TermsCondition.jsx";
 import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy.jsx";
+import LoginPage from "./components/LoginPage/LoginPage.jsx";
 import { ToastContainer } from "react-toastify";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -55,6 +56,10 @@ function App() {
         element: <LayOut />,
         children: [
           { index: true, element: <Home /> },
+          {
+            path: "login",
+            element: <LoginPage />,
+          },
           {
             path: "manageplaylist",
             element: (
